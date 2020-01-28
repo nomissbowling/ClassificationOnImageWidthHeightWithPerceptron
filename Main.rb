@@ -50,9 +50,9 @@ def plot_border(perceptron, input_data, save_name)
 
   Gnuplot.open do |gp|
     Gnuplot::Plot.new(gp) do |plot|
-      plot.terminal "png enhanced font 'ＭＳ ゴシック' fontscale 1.2 size 1000, 1000"
+      plot.terminal "png enhanced font 'ＭＳ 明朝' fontscale 3 size 1000, 1000 "
       plot.output   save_name + ".png"
-      plot.title    "データの分布と境界線"
+      plot.title    "＿データの分布と境界線"
       plot.xlabel   "Width"
       plot.ylabel   "Height"
       plot.xrange   "[" + String(xrange[0]) + ":" + String(xrange[-1]) + "]"
