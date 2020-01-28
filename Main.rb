@@ -1,4 +1,5 @@
 require "csv"
+require "gr/plot"
 require_relative "./Perceptron"
 
 def main
@@ -16,8 +17,9 @@ def main
     input_ans[i] = inputs[i][-1]
   end
 
-  perceptron = Perceptron.new(0.3)
+  # 学習を開始(学習用データ全てに正答するまで学習し続ける)
   cnt = 0
+  perceptron = Perceptron.new(1)
   loop do
     perceptron.forward(input_data, input_ans, true)
     puts "cnt:#{cnt += 1} w1:#{perceptron.weight[0]} w2:#{perceptron.weight[1]} flag:#{perceptron.is_all_corrected}"
@@ -28,6 +30,11 @@ def main
   end
 end
 
+def plot_border(perceptron, input_data)
+  input_data.each do |input|
+    3
+  end
+end
 
 # コマンドラインから呼び出されたときのみ実行する
 if __FILE__ == $0
