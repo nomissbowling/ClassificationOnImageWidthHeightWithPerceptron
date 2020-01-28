@@ -32,7 +32,7 @@ class Perceptron
     self.is_all_corrected = false
 
     # 各入力に対する重みの初期値を乱数で決定
-    self.weight = [rand(1), rand(1)]
+    self.weight = [rand(0.0..10.0), rand(0.0..10.0)]
   end
 
   # データを入力し出力を得る
