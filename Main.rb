@@ -6,9 +6,6 @@ def main
   # 学習用データを取得
   inputs = CSV.read("./trainingData.csv")
 
-  # ファイル読み込みはString型なので各要素をNumeric型に変換
-  inputs = inputs.map{|in2| in2.map(&:to_i)}
-
   # 学習用データを入力と出力で分割
   input_data = Array.new(inputs.size).map {Array.new(2)}
   input_ans = Array.new(inputs.size)
@@ -17,6 +14,11 @@ def main
     input_ans[i] = inputs[i][-1]
   end
 
+  # ファイル読み込みはString型なので各要素をNumeric型に変換
+  #inputs = inputs.map{|in2| in2.map{|in3| in3.gsub(/[^\d]/, "").to_i}}
+  input_data = input_data.map{|in2| in2.map{|in3| in3.gsub(/[^\d]/, "").to_i}}
+  input_ans = input_ans.map(&:to_i)
+
   # 学習を開始(学習用データ全てに正答するまで学習し続ける)
   cnt = 0
   perceptron = Perceptron.new(0.002)
@@ -24,12 +26,16 @@ def main
   loop do
     perceptron.forward(input_data, input_ans, true)
     puts "cnt:#{cnt += 1} w1:#{perceptron.weight[0]} w2:#{perceptron.weight[1]} flag:#{perceptron.is_all_corrected}"
-    p perceptron.output
+    p input_ans
     p perceptron.activated_output
+    p perceptron.output.map(&:to_i)
     puts
 
     # 学習データの散布図と，学習した境界線を表示
     plot_border(perceptron, input_data, String(cnt))
+
+    # 学習回数5回ごとに学習係数を下げる
+    perceptron.eta *= 0.95
     break if perceptron.is_all_corrected
   end # loop
 end
@@ -43,6 +49,21 @@ def plot_border(perceptron, input_data, save_name)
   # 横幅，高さをそれぞれ抜き出し
   width = input_data.transpose[0]
   height = input_data.transpose[1]
+
+  # 正解ラベルでデータを分ける
+  width_positive = Array.new
+  height_positive = Array.new
+  width_negative = Array.new
+  height_negative = Array.new
+  width.size.times do |i|
+    if width[i] >= height[i]
+      width_positive.push(width[i])
+      height_positive.push(height[i])
+    else
+      width_negative.push(width[i])
+      height_negative.push(height[i])
+    end
+  end
 
   # 境界線データを作成
   border_x = xrange
@@ -59,10 +80,17 @@ def plot_border(perceptron, input_data, save_name)
       plot.yrange   "[" + String(yrange[0]) + ":" + String(yrange[-1]) + "]"
       plot.grid
 
-      # 入力データの散布図
-      plot.data << Gnuplot::DataSet.new([width, height]) do |ds|
-        ds.with = "circles"
+      # 入力データの散布図(横長)
+      plot.data << Gnuplot::DataSet.new([width_positive, height_positive]) do |ds|
+        ds.with = "points pt 13 ps 3"
         ds.linecolor = 'rgb "red"'
+        ds.notitle
+      end # do
+
+      # 入力データの散布図(縦長)
+      plot.data << Gnuplot::DataSet.new([width_negative, height_negative]) do |ds|
+        ds.with = "points pt 13 ps 3"
+        ds.linecolor = 'rgb "green"'
         ds.notitle
       end # do
 

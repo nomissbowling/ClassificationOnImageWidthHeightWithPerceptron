@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e16118a-31fe-4197-9f4d-7cae8031cc2a" name="Default Changelist" comment="">
+    <list default="true" id="2e16118a-31fe-4197-9f4d-7cae8031cc2a" name="Default Changelist" comment="update : 今度こそグラフ描画大勝利">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/レポート3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/レポート3.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Main.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Perceptron.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Perceptron.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Test.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yx2.ps" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="52" column="74" selection-start-line="52" selection-start-column="74" selection-end-line="52" selection-end-column="74" />
+            <state relative-caret-position="162">
+              <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Perceptron.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1843">
-              <caret line="41" column="3" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="3" />
+            <state relative-caret-position="2465">
+              <caret line="85" column="9" selection-start-line="85" selection-start-column="9" selection-end-line="85" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -58,8 +58,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Test.rb" />
         <option value="$PROJECT_DIR$/Perceptron.rb" />
+        <option value="$PROJECT_DIR$/Test.rb" />
         <option value="$PROJECT_DIR$/Main.rb" />
       </list>
     </option>
@@ -72,8 +72,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="20" />
-    <option name="y" value="16" />
+    <option name="x" value="14" />
+    <option name="y" value="454" />
     <option name="width" value="2762" />
     <option name="height" value="1790" />
   </component>
@@ -180,7 +180,7 @@
       <option name="presentableId" value="Default" />
       <updated>1580206140746</updated>
       <workItem from="1580206144952" duration="12437000" />
-      <workItem from="1580218773789" duration="3054000" />
+      <workItem from="1580218773789" duration="7418000" />
     </task>
     <task id="LOCAL-00001" summary="Add : Initial Commit">
       <created>1580215154169</created>
@@ -196,11 +196,25 @@
       <option name="project" value="LOCAL" />
       <updated>1580218087354</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update : グラフ表示大勝利した(もっとこまめにCommitするべき)">
+      <created>1580222021649</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1580222021649</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update : 今度こそグラフ描画大勝利">
+      <created>1580223072093</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1580223072093</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15491000" />
+    <option name="totallyTimeSpent" value="19855000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="895" extended-state="6" />
@@ -233,12 +247,14 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add : Initial Commit" />
     <MESSAGE value="update : グラフ表示したい" />
-    <option name="LAST_COMMIT_MESSAGE" value="update : グラフ表示したい" />
+    <MESSAGE value="update : グラフ表示大勝利した(もっとこまめにCommitするべき)" />
+    <MESSAGE value="update : 今度こそグラフ描画大勝利" />
+    <option name="LAST_COMMIT_MESSAGE" value="update : 今度こそグラフ描画大勝利" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/3@Main.rcov" NAME="Main Coverage Results" MODIFIED="1580221918645" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="レポート3" />
+    <SUITE FILE_PATH="coverage/3@Main.rcov" NAME="Main Coverage Results" MODIFIED="1580226342841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="レポート3" />
     <SUITE FILE_PATH="coverage/3@Perceptron.rcov" NAME="Perceptron Coverage Results" MODIFIED="1580211623150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="レポート3" />
-    <SUITE FILE_PATH="coverage/3@Test.rcov" NAME="Test Coverage Results" MODIFIED="1580220311169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="レポート3" />
+    <SUITE FILE_PATH="coverage/3@Test.rcov" NAME="Test Coverage Results" MODIFIED="1580224890174" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="レポート3" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/ruby-gr-0.0.11/lib/gr.rb">
@@ -262,6 +278,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Perceptron.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2465">
+          <caret line="85" column="9" selection-start-line="85" selection-start-column="9" selection-end-line="85" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -269,17 +292,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Perceptron.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1843">
-          <caret line="41" column="3" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Main.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="52" column="74" selection-start-line="52" selection-start-column="74" selection-end-line="52" selection-end-column="74" />
+        <state relative-caret-position="162">
+          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
         </state>
       </provider>
     </entry>

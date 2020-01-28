@@ -18,7 +18,7 @@ class Perceptron
   attr_accessor :error
 
   # 学習率(学習係数)
-  attr_reader :eta
+  attr_accessor :eta
 
   # 全て正答したか(終了条件)
   attr_accessor :is_all_corrected
@@ -26,7 +26,7 @@ class Perceptron
   # メンバ変数の宣言等
   def initialize(eta)
     # 学習率(学習係数)
-    @eta = eta
+    self.eta = eta
 
     # 全て正答フラグを初期化
     self.is_all_corrected = false
