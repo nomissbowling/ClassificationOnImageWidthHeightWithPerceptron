@@ -16,7 +16,7 @@ def main
 
   # ファイル読み込みはString型なので各要素をNumeric型に変換
   #inputs = inputs.map{|in2| in2.map{|in3| in3.gsub(/[^\d]/, "").to_i}}
-  input_data = input_data.map{|in2| in2.map{|in3| in3.gsub(/[^\d]/, "").to_i}}
+  input_data = input_data.map {|in2| in2.map {|in3| in3.gsub(/[^\d]/, "").to_i}}
   input_ans = input_ans.map(&:to_i)
 
   # 学習を開始(学習用データ全てに正答するまで学習し続ける)
@@ -25,11 +25,10 @@ def main
   plot_border(perceptron, input_data, "0")
   loop do
     perceptron.forward(input_data, input_ans, true)
+
+    # デバッグ出力
     puts "cnt:#{cnt += 1} w1:#{perceptron.weight[0]} w2:#{perceptron.weight[1]} flag:#{perceptron.is_all_corrected}"
-    p input_ans
-    p perceptron.activated_output
-    p perceptron.output.map(&:to_i)
-    puts
+    p input_ans; p perceptron.activated_output; p perceptron.output.map(&:to_i); puts
 
     # 学習データの散布図と，学習した境界線を表示
     plot_border(perceptron, input_data, String(cnt))
@@ -67,17 +66,17 @@ def plot_border(perceptron, input_data, save_name)
 
   # 境界線データを作成
   border_x = xrange
-  border_y = border_x.map{|xll| xll *(perceptron.weight[0] / perceptron.weight[1] * (-1))}
+  border_y = border_x.map {|xll| xll *(perceptron.weight[0] / perceptron.weight[1] * (-1))}
 
   Gnuplot.open do |gp|
     Gnuplot::Plot.new(gp) do |plot|
       plot.terminal "png enhanced font 'ＭＳ 明朝' fontscale 3 size 1000, 1000 "
-      plot.output   save_name + ".png"
-      plot.title    "＿データの分布と境界線"
-      plot.xlabel   "Width"
-      plot.ylabel   "Height"
-      plot.xrange   "[" + String(xrange[0]) + ":" + String(xrange[-1]) + "]"
-      plot.yrange   "[" + String(yrange[0]) + ":" + String(yrange[-1]) + "]"
+      plot.output save_name + ".png"
+      plot.title "＿データの分布と境界線"
+      plot.xlabel "Width"
+      plot.ylabel "Height"
+      plot.xrange "[" + String(xrange[0]) + ":" + String(xrange[-1]) + "]"
+      plot.yrange "[" + String(yrange[0]) + ":" + String(yrange[-1]) + "]"
       plot.grid
 
       # 入力データの散布図(横長)
@@ -96,7 +95,7 @@ def plot_border(perceptron, input_data, save_name)
 
       # 重みの境界線
       plot.data << Gnuplot::DataSet.new([border_x, border_y]) do |ds|
-        ds.with      = "lines"  # 点のみなら "points"
+        ds.with = "lines" # 点のみなら "points"
         ds.linewidth = 3
         ds.linecolor = 'rgb "blue"'
         ds.notitle
@@ -104,8 +103,8 @@ def plot_border(perceptron, input_data, save_name)
 
       # X軸の描画
       xl = [xrange[0], xrange[-1]]
-      plot.data << Gnuplot::DataSet.new([xl, Array.new(2,0)]) do |ds|
-        ds.with      = "lines"  # 点のみなら "points"
+      plot.data << Gnuplot::DataSet.new([xl, Array.new(2, 0)]) do |ds|
+        ds.with = "lines" # 点のみなら "points"
         ds.linewidth = 1
         ds.linecolor = 'rgb "black"'
         ds.notitle
@@ -113,8 +112,8 @@ def plot_border(perceptron, input_data, save_name)
 
       # Y軸の描画
       yl = [yrange[0], yrange[-1]]
-      plot.data << Gnuplot::DataSet.new([Array.new(2,0), yl]) do |ds|
-        ds.with      = "lines"  # 点のみなら "points"
+      plot.data << Gnuplot::DataSet.new([Array.new(2, 0), yl]) do |ds|
+        ds.with = "lines" # 点のみなら "points"
         ds.linewidth = 1
         ds.linecolor = 'rgb "black"'
         ds.notitle
