@@ -1,3 +1,5 @@
+require "active_support"
+require "active_support/core_ext"
 require_relative "../IsPortrait/Perceptron"
 
 class PerceptronWithBias < Perceptron
@@ -15,6 +17,7 @@ class PerceptronWithBias < Perceptron
 		# 重みは自分で更新したい
 		if weights == "114514"
 			self.weight = [rand(0.0..1.0),rand(0.0..1.0)]
+			self.pre_weight = self.weight.deep_dup
 		end
 	end
 
@@ -44,11 +47,12 @@ class PerceptronWithBias < Perceptron
 			# 間違っていたら更新式に従って更新
 			if self.input_ans[i] != self.activated_output[i]
 				self.weight.size.times do |j|
-					#self.weight[j] += self.eta * self.input_ans[i] * self.input[i][j]
-					self.weight[j] += self.eta * (self.input_ans[i] - self.output[i]) * self.input[i][j]
+					self.weight[j] += self.eta * self.input_ans[i] * self.input[i][j]
+					 #self.weight[j] += self.eta * (self.input_ans[i] - self.output[i]) * self.input[i][j]
 				end # each
 				# バイアスの更新
-				self.bias = -self.eta * (self.input_ans[i] - self.output[i])
+				self.bias += self.eta * (self.input_ans[i] - self.output[i])
+				#self.bias -= self.eta * self.input_ans[i]
 			end # if
 		end # each
 	end

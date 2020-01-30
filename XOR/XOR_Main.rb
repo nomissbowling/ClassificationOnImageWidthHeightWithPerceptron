@@ -8,12 +8,9 @@ require_relative "./PerceptronWithBias"
 def main
 	is_debug = true
 	eta = 0.5
-	bias = rand(-3.0..3.0)
-	x_range = (-5.0..10)
-	y_range = (-5.0..10)
-	# bias = rand(-100.0..100)
-	# x_range = (-50.0..180)
-	# y_range = (-50.0..180)
+	bias = rand(-2.0..2.0)
+	x_range = (-2.0..3)
+	y_range = (-2.0..3)
 	nand_path = "../nandData.csv"
 	or_path = "../orData.csv"
 	and_path = "../andData.csv"
