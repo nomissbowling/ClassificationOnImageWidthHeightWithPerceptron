@@ -1,137 +1,57 @@
 require "csv"
 require "gnuplot"
-require_relative "../IsPortrait/Perceptron"
+require "active_support"
+require "active_support/core_ext"
+require_relative "./Util"
+require_relative "./PerceptronWithBias"
 
 def main
+	eta = 0.2
+	# bias = rand(-3.0..3.0)
+	# x_range = (-5.0..10)
+	# y_range = (-5.0..10)
+	bias = rand(-100.0..100)
+	x_range = (-50.0..180)
+	y_range = (-50.0..180)
+	nand_path = "../nandData.csv"
+	or_path = "../orData.csv"
+	and_path = "../andData.csv"
+
 	# 学習データを取得する
-	input_data, input_ans = read_training_data("../andData.csv")
+	input_data, input_ans = read_training_data("../BebebeData.csv")
 
 	# 学習を開始(学習用データ全てに正答するまで学習し続ける)
 	cnt = 0
-	perceptron = Perceptron.new(2, -1.5)
-	plot_border(perceptron, input_data, input_ans, "./AND/0")
+	and_perceptron = PerceptronWithBias.new(eta, bias)
+	plot_border_bias(and_perceptron, input_data, input_ans, "./AND/0", x_range, y_range)
 	loop do
-		perceptron.forward(input_data, input_ans, true)
+		and_perceptron.forward(input_data, input_ans, true)
 
 		# デバッグ出力
-		puts "cnt:#{cnt += 1} w1:#{perceptron.weight[0]} w2:#{perceptron.weight[1]} flag:#{perceptron.is_all_corrected}"
-		p perceptron.output
-		p input_ans; p perceptron.activated_output; p perceptron.output.map(&:to_i); puts
+		puts "cnt:#{cnt} w1:#{and_perceptron.weight[0].round(3)} w2:#{and_perceptron.weight[1].round(3)} bias:#{and_perceptron.bias.round(3)} flag:#{and_perceptron.is_all_corrected}"
+		puts "output : #{and_perceptron.output.map {|outp| outp.round(3)}}"
+		puts "actiated : #{and_perceptron.activated_output}"
+		puts "teacher : #{input_ans}"
+		puts ""
 
 		# 学習データの散布図と，学習した境界線を表示
-		plot_border(perceptron, input_data, input_ans, "./AND/" + String(cnt))
+		#plot_border_bias(and_perceptron, input_data, input_ans, "./AND/" + String(cnt), x_range, y_range)
+
+		# 正規化した出力がほしい(0.0~1.0)
+		#tmp = and_perceptron.deep_dup
+		tmp = and_perceptron
+		tmp.bias /= tmp.weight.map {|www| www.abs}.sum / tmp.weight.size
+		plot_border_bias(tmp, input_data, input_ans, "./AND/" + String(cnt += 1), x_range, y_range)
 
 		# 学習回数5回ごとに学習係数を下げる
-		perceptron.eta *= 0.95
-		break if perceptron.is_all_corrected
+		and_perceptron.eta = cnt % 5 == 4 ? and_perceptron.eta * 0.95 : and_perceptron.eta
+		# 確率で学習係数を跳ね上げる
+		and_perceptron.eta = rand(0..30) == 0 ? eta : and_perceptron.eta
+
+		break if and_perceptron.is_all_corrected
 	end # loop
 end
 
-
-# 学習データを読み込む
-def read_training_data(path)
-	# 学習用データを取得
-	inputs = CSV.read(path)
-
-	# 学習用データを入力と出力で分割
-	input_data = Array.new(inputs.size).map {Array.new(2)}
-	input_ans = Array.new(inputs.size)
-	inputs.size.times do |i|
-		input_data[i] = inputs[i].slice(0..1)
-		input_ans[i] = inputs[i][-1]
-	end
-
-	# ファイル読み込みはString型なので各要素をNumeric型に変換
-	#inputs = inputs.map{|in2| in2.map{|in3| in3.gsub(/[^\d]/, "").to_i}}
-	input_data = input_data.map {|in2| in2.map {|in3| in3.gsub(/[^\d]/, "").to_i}}
-	input_ans = input_ans.map(&:to_i)
-
-	return input_data, input_ans
-end
-
-
-# 学習した結果を描画したい
-def plot_border(perceptron, input_data, input_ans, save_name)
-	# グラフの描画範囲
-	xrange = (-0.5..1.5).step(0.1).map{|xr| xr}
-	yrange = (-0.5..1.5).step(0.1).map{|yr| yr}
-
-	# 横幅，高さをそれぞれ抜き出し
-	width = input_data.transpose[0]
-	height = input_data.transpose[1]
-
-	# 正解ラベルでデータを分ける
-	width_positive = Array.new
-	height_positive = Array.new
-	width_negative = Array.new
-	height_negative = Array.new
-	width.size.times do |i|
-		if input_ans[i] == 1
-			width_positive.push(width[i])
-			height_positive.push(height[i])
-		else
-			width_negative.push(width[i])
-			height_negative.push(height[i])
-		end
-	end
-
-	# 境界線データを作成
-	border_x = xrange
-	border_y = border_x.map {|xll| perceptron.bias + xll *(perceptron.weight[0] / perceptron.weight[1] * (-1))}
-
-	Gnuplot.open do |gp|
-		Gnuplot::Plot.new(gp) do |plot|
-			plot.terminal "png enhanced font 'ＭＳ 明朝' fontscale 3 size 1000, 1000 "
-			plot.output save_name + ".png"
-			plot.title "＿データの分布と境界線"
-			plot.xlabel "Width"
-			plot.ylabel "Height"
-			plot.xrange "[" + String(xrange[0]) + ":" + String(xrange[-1]) + "]"
-			plot.yrange "[" + String(yrange[0]) + ":" + String(yrange[-1]) + "]"
-			plot.grid
-
-			# 入力データの散布図(横長)
-			plot.data << Gnuplot::DataSet.new([width_positive, height_positive]) do |ds|
-				ds.with = "points pt 13 ps 3"
-				ds.linecolor = 'rgb "red"'
-				ds.notitle
-			end # do
-
-			# 入力データの散布図(縦長)
-			plot.data << Gnuplot::DataSet.new([width_negative, height_negative]) do |ds|
-				ds.with = "points pt 13 ps 3"
-				ds.linecolor = 'rgb "green"'
-				ds.notitle
-			end # do
-
-			# 重みの境界線
-			plot.data << Gnuplot::DataSet.new([border_x, border_y]) do |ds|
-				ds.with = "lines" # 点のみなら "points"
-				ds.linewidth = 3
-				ds.linecolor = 'rgb "blue"'
-				ds.notitle
-			end # do
-
-			# X軸の描画
-			xl = [xrange[0], xrange[-1]]
-			plot.data << Gnuplot::DataSet.new([xl, Array.new(2, 0)]) do |ds|
-				ds.with = "lines" # 点のみなら "points"
-				ds.linewidth = 1
-				ds.linecolor = 'rgb "black"'
-				ds.notitle
-			end # do
-
-			# Y軸の描画
-			yl = [yrange[0], yrange[-1]]
-			plot.data << Gnuplot::DataSet.new([Array.new(2, 0), yl]) do |ds|
-				ds.with = "lines" # 点のみなら "points"
-				ds.linewidth = 1
-				ds.linecolor = 'rgb "black"'
-				ds.notitle
-			end # do
-		end # do
-	end # do
-end
 
 # コマンドラインから呼び出されたときのみ実行する
 if __FILE__ == $0

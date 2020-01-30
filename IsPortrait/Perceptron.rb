@@ -15,13 +15,16 @@ class Perceptron
 	attr_accessor :input_ans
 
 	# 入力に対する誤差(Numeric)
-	attr_accessor :error
+	attr_accessor :errorBias
 
 	# 学習率(学習係数)
 	attr_accessor :eta
 
 	# 全て正答したか(終了条件)
 	attr_accessor :is_all_corrected
+
+	# 誤差
+	attr_accessor :error
 
 	# メンバ変数の宣言等
 	def initialize(eta)
@@ -30,6 +33,9 @@ class Perceptron
 
 		# 全て正答フラグを初期化
 		self.is_all_corrected = false
+
+		# 誤差を初期化
+		self.error = 0
 
 		# 各入力に対する重みの初期値を乱数で決定
 		self.weight = [rand(0.0..10.0), rand(0.0..10.0)]
@@ -97,7 +103,10 @@ class Perceptron
 	def calc_error
 		self.error = 0
 		self.input.size.times do |i|
-			self.error -= self.output[i] * self.input_ans[i]
+			# 間違えた場合のみ
+			if self.activated_output[i] == self.input_ans[i]
+				self.error -= self.output[i] * self.input_ans[i]
+			end
 		end # each
 	end
 
