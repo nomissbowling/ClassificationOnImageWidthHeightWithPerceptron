@@ -1,3 +1,6 @@
+require "active_support"
+require "active_support/core_ext"
+
 class Perceptron
 	# 各入力に対する重み(1次元(2))
 	attr_accessor :weight
@@ -26,6 +29,9 @@ class Perceptron
 	# 誤差
 	attr_accessor :error
 
+	# 前回の重み(表示用にほしい)
+	attr_accessor :pre_weight
+
 	# メンバ変数の宣言等
 	def initialize(eta)
 		# 学習率(学習係数)
@@ -39,6 +45,9 @@ class Perceptron
 
 		# 各入力に対する重みの初期値を乱数で決定
 		self.weight = [rand(0.0..10.0), rand(0.0..10.0)]
+
+		# 初回はpre_weight = weight
+		self.pre_weight = self.weight.deep_dup
 	end
 
 	# データを入力し出力を得る
@@ -65,6 +74,7 @@ class Perceptron
 
 		# 学習を行う(指定されていた場合)
 		if learning
+			self.pre_weight = self.weight.deep_dup
 			update_weight
 		end
 
@@ -118,7 +128,7 @@ class Perceptron
 			# 間違っていたら更新式に従って更新
 			if self.input_ans[i] != self.activated_output[i]
 				self.weight.size.times do |j|
-					self.weight[j] += @eta * self.input_ans[i] * self.input[i][j]
+					self.weight[j] += self.eta * self.input_ans[i] * self.input[i][j]
 				end # each
 			end # if
 		end # each

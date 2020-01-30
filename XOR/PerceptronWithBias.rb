@@ -29,7 +29,9 @@ class PerceptronWithBias < Perceptron
 				self.output[i] += self.weight[j] * self.input[i][j]
 			end # each
 			# バイアスを付与
-			self.output[i] -= self.bias
+			self.output[i] += self.bias
+
+			puts "bias:#{self.bias}, input[i]:#{self.input[i]}, weight:#{self.weight}, output[#{i}} : #{self.output}"
 		end # each
 		self.output
 	end
@@ -42,7 +44,8 @@ class PerceptronWithBias < Perceptron
 			# 間違っていたら更新式に従って更新
 			if self.input_ans[i] != self.activated_output[i]
 				self.weight.size.times do |j|
-					self.weight[j] += @eta * self.input_ans[i] * self.input[i][j]
+					#self.weight[j] += self.eta * self.input_ans[i] * self.input[i][j]
+					self.weight[j] += self.eta * (self.input_ans[i] - self.output[i]) * self.input[i][j]
 				end # each
 				# バイアスの更新
 				self.bias = -self.eta * (self.input_ans[i] - self.output[i])

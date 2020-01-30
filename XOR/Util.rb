@@ -47,7 +47,7 @@ def plot_border_bias(perceptron, input_data, input_ans, save_name, x_range, y_ra
 
 	# 境界線データを作成
 	border_x = xrange
-	border_y = border_x.map {|xll| perceptron.bias + xll *(perceptron.weight[0] / perceptron.weight[1] * (-1))}
+	border_y = border_x.map {|xll| -perceptron.bias + xll *(perceptron.pre_weight[0] / perceptron.pre_weight[1] * (-1))}
 
 	Gnuplot.open do |gp|
 		Gnuplot::Plot.new(gp) do |plot|
